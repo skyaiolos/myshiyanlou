@@ -1,6 +1,6 @@
 __author__ = "Jianguo Jin (jinjianguosky@hotmail.com)"
 
-#!/usr/bin/python3 
+# !/usr/bin/python3
 # -*- coding:utf-8 -*-  
 # Created by Jianguo on 2017/6/1
 """
@@ -28,16 +28,16 @@ argparse 模块使得编写用户友好的命令行接口非常容易。程序�
 
 parser = argparse.ArgumentParser(description='文本文件编码检测与转换')
 
-parser.add_argument('filePaths',nargs ='+',help='检测或转换的文件路径')
-parser.add_argument('-e', '--encoding', nargs = '?', const = 'UTF-8',
-                    help = '''
+parser.add_argument('filePaths', nargs='+', help='检测或转换的文件路径')
+parser.add_argument('-e', '--encoding', nargs='?', const='UTF-8',
+                    help='''
                             目标编码。支持的编码有：
                             ASCII, (Default) UTF-8 (with or without a BOM), UTF-16 (with a BOM),
                             UTF-32 (with a BOM), Big5, GB2312/GB18030, EUC-TW, HZ-GB-2312, ISO-2022-CN, EUC-JP, SHIFT_JIS, ISO-2022-JP,
                             ISO-2022-KR, KOI8-R, MacCyrillic, IBM855, IBM866, ISO-8859-5, windows-1251, ISO-8859-2, windows-1250, EUC-KR,
                             ISO-8859-5, windows-1251, ISO-8859-1, windows-1252, ISO-8859-7, windows-1253, ISO-8859-8, windows-1255, TIS-620
                             ''')
-parser.add_argument('-o', '--output',help = '输出目录')
+parser.add_argument('-o', '--output', help='输出目录')
 
 """
 关于方法 add_argument() 的使用，可参考下面的引用（限于篇幅只引用部分，
@@ -63,7 +63,7 @@ if args.output != None:
 # 实例化一个通用检测器
 detector = UniversalDetector()
 print()
-print('Encoding (Confidence)',':','File path')
+print('Encoding (Confidence)', ':', 'File path')
 
 for filePath in args.filePaths:
     # 检测文件路径是否有效，无效则跳过
@@ -89,15 +89,14 @@ for filePath in args.filePaths:
         charEncoding = 'Unknown'
         confidence = 0.99
     print('{} {:>12} : {}'.format(charEncoding.rjust(8),
-        '('+str(confidence*100)+'%)', filePath))
+                                  '(' + str(confidence * 100) + '%)', filePath))
     if args.encoding and charEncoding != 'Unknown' and confidence > 0.6:
         # 若未设置输出目录则覆盖源文件
         outputPath = args.output + os.path.basename(filePath) if args.output else filePath
-        with open(filePath, 'r', encoding = charEncoding, errors = 'replace') as f:
+        with open(filePath, 'r', encoding=charEncoding, errors='replace') as f:
             temp = f.read()
-        with open(outputPath, 'w', encoding = args.encoding, errors = 'replace') as f:
+        with open(outputPath, 'w', encoding=args.encoding, errors='replace') as f:
             f.write(temp)
 
 if __name__ == '__main__':
     pass
-
